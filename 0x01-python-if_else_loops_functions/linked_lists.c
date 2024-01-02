@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Lists.h"
+#include "lists.h"
 
 /**
  * print_listint - prints all elements of a listint_t list
@@ -72,3 +72,4 @@ head = head->next;
 free(current);
 }
 }
+
