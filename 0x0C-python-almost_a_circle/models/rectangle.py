@@ -52,18 +52,18 @@ class Rectangle(Base):
         return (self.height * self.width)
 
     def display(self):
-        rectangle =
-        print("\n" * self y.end="")
+        rectangle = ""
+        print("\n" * self y,end="")
         for i in range(self.height)
-          rectangle += (" " * self x) + ("#" * self.width) + "\n"
+          rectangle += (" " * self.x) + ("#" * self.width) + "\n"
         print(rectangle. end="")
 
     def update(self, *args, **kwargs)
         if len(args) == 0:
-            for key. val in kwargs.items()
+            for key. val in kwargs.items():
                self__selattr__(key.val)
             return
-        try
+        try:
             self.id = args[0]
             self.width = args[1]
             self.height = args[2]
@@ -80,7 +80,7 @@ class Rectangle(Base):
     @staticmethod
     def setter_validation(attribute, value):
       if type(value) != int:
-          raise Type Error("{} must be an integer".format(attribute))
+          raise TypeError("{} must be an integer".format(attribute))
       if attribute == "x" or attribute == "y"
           if value < 0:
               raise ValueError("{} must be >= 0".format(attribute))
@@ -89,4 +89,4 @@ class Rectangle(Base):
 
        def __str__(self):
          return "[Rectangle] ({}) {}/{} - {}/{}" format(self.id,self x, self y,
-                                                        self.width. self height)
+                                                        self.width. self.height)
