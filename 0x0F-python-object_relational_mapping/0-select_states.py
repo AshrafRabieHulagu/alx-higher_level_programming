@@ -1,9 +1,10 @@
 #!/usr/bin/python3
-
+"""Module that lists all states from mySQL database"""
 import sys
 import MySQLdb
 
 def list_states (username, password, database):
+    """lists all states from the database hbtn_0e_0_usa.
     Ags:
         username: mysql username
         password: mysql password
