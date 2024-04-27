@@ -1,19 +1,24 @@
 #!/bin/bash
-# Sends a JSON POST request to a URL with the contents of a file
 
+# Check if both arguments are provided
 if [ $# -ne 2 ]; then
-    echo "Usage: $0 URL JSON_FILE"
+    echo "Usage: $0 <URL> <filename>"
     exit 1
 fi
 
-URL=$1
-JSON_FILE=$2
+# Read the filename and check if it exists
+filename="$2"
+if [ ! -f "$filename" ]; then
+    echo "Error: File '$filename' not found."
+    exit 1
+fi
 
-# Check if the JSON file is valid
-if ! jq empty $JSON_FILE > /dev/null 2>&1; then
+# Send the JSON data from the file as a POST request
+curl -s -X POST -H "Content-Type: application/json" -d "@$filename" "$1"
+
+# Check if the response contains valid JSON
+if [ $? -eq 0 ]; then
+    echo "Valid JSON"
+else
     echo "Not a valid JSON"
-    exit 1
 fi
-
-# Send the POST request and display the response body
-curl -sX POST -H "Content-Type: application/json" --data-binary "@$JSON_FILE" "$URL"
