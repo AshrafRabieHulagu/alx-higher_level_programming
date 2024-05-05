@@ -1,23 +1,26 @@
 #!/usr/bin/python3
-""" Script that takes in a letter and sends
-    a POST request to url with the letter as
-    a parameter. """
+""" Post email """
 import requests
-from sys import argv
-
+import sys
 
 if __name__ == "__main__":
-    if len(argv) == 2:
-        q = argv[1]
-    else:
-        q = ''
+    """ init variables """
     url = 'http://0.0.0.0:5000/search_user'
-    req = requests.post(url, data={'q': q})
+    if len(sys.argv) > 1:
+        q = sys.argv[1]
+    else:
+        q = ""
+
+    values = {'q': q}
+
+    """ Sending data """
+    html = requests.post(url, data=values)
+
     try:
-        data = req.json()
-        if not data:
-            print('No result')
+        data = html.json()
+        if len(data) == 0:
+            print("No result")
         else:
-            print('[{}] {}'.format(data.get('id'), data.get('name')))
-    except Exception:
-        print('Not a valid JSON')
+            print("[%s] %s" % (data['id'], data['name']))
+    except ValueError:
+        print("Not a valid JSON")
