@@ -1,24 +1,28 @@
 #!/bin/bash
 
-# Check if both arguments are provided
+# Check for required arguments
 if [ $# -ne 2 ]; then
-    echo "Usage: $0 <URL> <filename>"
-    exit 1
+  echo "Usage: $0 <URL> <JSON_FILE>"
+  exit 1
 fi
 
-# Read the filename and check if it exists
-filename="$2"
-if [ ! -f "$filename" ]; then
-    echo "Error: File '$filename' not found."
-    exit 1
+# URL and JSON file path
+url="$1"
+json_file="$2"
+
+# Check if JSON file exists
+if [ ! -f "$json_file" ]; then
+  echo "Error: File '$json_file' does not exist"
+  exit 1
 fi
 
-# Send the JSON data from the file as a POST request
-curl -s -X POST -H "Content-Type: application/json" -d "@$filename" "$1"
+# Send POST request with JSON data
+response=$(curl -s -X POST -H "Content-Type: application/json" -d "@$json_file" "$url")
 
-# Check if the response contains valid JSON
+# Check for successful response (exit code 0)
 if [ $? -eq 0 ]; then
-    echo "Valid JSON"
+  # Display response body
+  echo "$response"
 else
-    echo "Not a valid JSON"
+  echo "Error: Failed to send request"
 fi
