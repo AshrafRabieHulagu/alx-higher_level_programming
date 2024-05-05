@@ -1,15 +1,15 @@
 #!/usr/bin/python3
-''' a python script that sends request to url and print body'''
+""" ERROR CODES TO BE HANDLED"""
 import urllib.request
-import urllib.error
+from urllib.error import HTTPError
 import sys
 
 
-if __name__ == '__main__':
-    url = sys.argv[1]
+if __name__ == "__main__":
     try:
-        with urllib.request.urlopen(url) as response:
-            body = response.read()
-            print(body.decode('utf-8'))
-    except urllib.error.HTTPError as e:
+        with urllib.request.urlopen(sys.argv[1]) as response:
+            dedata = response.read()
+            dedata = dedata.decode("UTF-8")
+            print(dedata)
+    except HTTPError as e:
         print('Error code: {}'.format(e.code))
