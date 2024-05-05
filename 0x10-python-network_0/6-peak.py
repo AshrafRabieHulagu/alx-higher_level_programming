@@ -1,27 +1,35 @@
-def find_peak(arr):
-    n = len(arr)
-    if n == 0:
-        return None
+Python
+def find_peak(list_of_integers):
+  """
+  Finds a peak element in an unsorted list of integers.
 
-    def binary_search(left, right):
-        if left == right:
-            return left
+  Args:
+      list_of_integers: A list of integers.
 
-        mid = (left + right) // 2
-        if arr[mid] > arr[mid + 1]:
-            # Peak is on the left side
-            return binary_search(left, mid)
-        else:
-            # Peak is on the right side
-            return binary_search(mid + 1, right)
+  Returns:
+      The index of a peak element in the list, or None if the list is empty.
+  """
 
-    return binary_search(0, n - 1)
+  # Handle empty list case
+  if not list_of_integers:
+    return None
 
-# Example usage
-arr1 = [1, 2, 4, 6, 3]
-arr2 = [4, 2, 1, 2, 3, 1]
-arr3 = [2, 2, 2]
+  # Implement Binary Search with peak detection logic
+  left, right = 0, len(list_of_integers) - 1
 
-print(find_peak(arr1))  # Output: 6
-print(find_peak(arr2))  # Output: 3
-print(find_peak(arr3))  # Output: 2
+  while left <= right:
+    mid = (left + right) // 2
+
+    # Check if mid is a peak element
+    if (mid == 0 or list_of_integers[mid] > list_of_integers[mid - 1]) and \
+       (mid == len(list_of_integers) - 1 or list_of_integers[mid] > list_of_integers[mid + 1]):
+      return mid
+
+    # Move to the side with the potentially higher peak
+    elif mid > 0 and list_of_integers[mid] < list_of_integers[mid - 1]:
+      right = mid - 1
+    else:
+      left = mid + 1
+
+  # No peak found (shouldn't happen with proper input)
+  return None
