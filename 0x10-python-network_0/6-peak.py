@@ -1,34 +1,23 @@
+#!/usr/bin/python3
+''' a method that finds the peak value in a list '''
+
+
 def find_peak(list_of_integers):
-  """
-  Finds a peak element in an unsorted list of integers.
+    '''returns peak of integers in list'''
+    if list_of_integers == []:
+        return None
 
-  Args:
-      list_of_integers: A list of integers.
+    size = len(list_of_integers)
+    if size == 1:
+        return list_of_integers[0]
+    elif size == 2:
+        return max(list_of_integers)
 
-  Returns:
-      The index of a peak element in the list, or None if the list is empty.
-  """
-
-  # Handle empty list case
-  if not list_of_integers:
-    return None
-
-  # Implement Binary Search with peak detection logic
-  left, right = 0, len(list_of_integers) - 1
-
-  while left <= right:
-    mid = (left + right) // 2
-
-    # Check if mid is a peak element
-    if (mid == 0 or list_of_integers[mid] > list_of_integers[mid - 1]) and \
-       (mid == len(list_of_integers) - 1 or list_of_integers[mid] > list_of_integers[mid + 1]):
-      return mid
-
-    # Move to the side with the potentially higher peak
-    elif mid > 0 and list_of_integers[mid] < list_of_integers[mid - 1]:
-      right = mid - 1
+    mid = int(size / 2)
+    peak = list_of_integers[mid]
+    if peak > list_of_integers[mid - 1] and peak > list_of_integers[mid + 1]:
+        return peak
+    elif peak < list_of_integers[mid - 1]:
+        return find_peak(list_of_integers[:mid])
     else:
-      left = mid + 1
-
-  # No peak found (shouldn't happen with proper input)
-  return None
+        return find_peak(list_of_integers[mid + 1:])
